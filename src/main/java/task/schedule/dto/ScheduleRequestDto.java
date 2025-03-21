@@ -12,5 +12,4 @@ public class ScheduleRequestDto {
     private LocalDate date;
     private String content;
     private String password;
-
 }
