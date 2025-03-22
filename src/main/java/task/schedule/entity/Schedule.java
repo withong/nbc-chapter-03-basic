@@ -31,9 +31,8 @@ public class Schedule {
         this.password = password;
     }
 
-    public void update(LocalDate date, String content, LocalDateTime updatedAt) {
+    public void update(LocalDate date, String content) {
         this.date = date;
         this.content = content;
-        this.updatedAt = updatedAt;
     }
 }
