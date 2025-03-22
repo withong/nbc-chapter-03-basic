@@ -1,6 +1,8 @@
 package task.schedule.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.entity.Schedule;
@@ -36,7 +38,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleResponseDto findScheduleById() {
-        return null;
+    public ScheduleResponseDto findScheduleById(Long id) {
+        Schedule schedule = scheduleRepository.findScheduleById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
+
+        return new ScheduleResponseDto(schedule);
     }
 }

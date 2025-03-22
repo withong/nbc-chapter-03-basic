@@ -11,10 +11,8 @@ import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.entity.Schedule;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.swing.text.html.Option;
+import java.util.*;
 
 @Repository
 public class ScheduleRepositoryImpl implements ScheduleRepository {
@@ -61,6 +59,14 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         sql.append(" order by updated_at desc");
 
         return jdbcTemplate.query(sql.toString(), scheduleRowMapper(), parameters.toArray());
+    }
+
+    @Override
+    public Optional<Schedule> findScheduleById(Long id) {
+        String sql = "select * from schedules where id = ?";
+        List<Schedule> result = jdbcTemplate.query(sql, scheduleRowMapper(), id);
+
+        return result.stream().findAny();
     }
 
     private RowMapper<Schedule> scheduleRowMapper() {
