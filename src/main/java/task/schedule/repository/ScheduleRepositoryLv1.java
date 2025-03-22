@@ -5,21 +5,17 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import task.schedule.dto.ScheduleRequestDto;
-import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.entity.Schedule;
 
 import javax.sql.DataSource;
-import javax.swing.text.html.Option;
 import java.util.*;
 
 @Repository
-public class ScheduleRepositoryImpl implements ScheduleRepository {
+public class ScheduleRepositoryLv1 implements ScheduleRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public ScheduleRepositoryImpl(DataSource dataSource) {
+    public ScheduleRepositoryLv1(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -39,9 +35,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         schedule.setId(key.longValue());
 
-//        Schedule saved = findScheduleById(id);
-
-        return schedule;
+        return findScheduleById(schedule.getId()).orElseThrow();
     }
 
     @Override
