@@ -1,5 +1,6 @@
 package task.schedule.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,11 +12,11 @@ import task.schedule.repository.ScheduleRepository;
 import java.util.List;
 
 @Service
-public class ScheduleServiceImpl implements ScheduleService {
+public class ScheduleServiceLv2 implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+    public ScheduleServiceLv2(@Qualifier("scheduleRepositoryLv2") ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
     }
 

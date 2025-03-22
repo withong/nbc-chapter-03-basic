@@ -1,5 +1,6 @@
 package task.schedule.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +11,12 @@ import task.schedule.service.ScheduleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedules")
-public class ScheduleController {
+@RequestMapping("/lv1/schedules")
+public class ScheduleControllerLv1 {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleController(ScheduleService scheduleService) {
+    public ScheduleControllerLv1(@Qualifier("scheduleServiceLv1") ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 

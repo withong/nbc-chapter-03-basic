@@ -10,6 +10,5 @@ public interface ScheduleRepository {
 
     Schedule saveSchedule(Schedule schedule);
     List<Schedule> findSchedules(String authorName, String updatedDate);
-
     Optional<Schedule> findScheduleById(Long id);
 }
