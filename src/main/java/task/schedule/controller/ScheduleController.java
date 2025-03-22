@@ -7,6 +7,8 @@ import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.service.ScheduleService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/schedules")
 public class ScheduleController {
@@ -23,7 +25,10 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public ResponseEntity<ScheduleRequestDto> findAllSchedule() {
-        return new ResponseEntity<>(scheduleService.)
+    public ResponseEntity<List<ScheduleResponseDto>> findSchedules(
+            @RequestParam("userId") Long userId,
+            @RequestParam(value = "updatedDate", required = false) String updatedDate
+    ) {
+        return new ResponseEntity<>(scheduleService.findSchedules(userId, updatedDate), HttpStatus.OK);
     }
 }

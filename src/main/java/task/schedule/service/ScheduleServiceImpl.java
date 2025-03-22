@@ -6,6 +6,8 @@ import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.entity.Schedule;
 import task.schedule.repository.ScheduleRepository;
 
+import java.util.List;
+
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
@@ -20,12 +22,21 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = new Schedule(requestDto.getUserId(), requestDto.getAuthorName(),
                 requestDto.getDate(), requestDto.getContent(), requestDto.getPassword());
 
-        Schedule savedSchedule = scheduleRepository.saveSchedule(schedule);
-        return new ScheduleResponseDto(savedSchedule);
+        return new ScheduleResponseDto(scheduleRepository.saveSchedule(schedule));
     }
 
     @Override
-    public ScheduleResponseDto findAllSchedule() {
+    public List<ScheduleResponseDto> findSchedules(Long userId, String updatedDate) {
+        List<Schedule> schedules = scheduleRepository.findSchedules(userId, updatedDate);
+        List<ScheduleResponseDto> responseList = schedules.stream()
+                .map(ScheduleResponseDto::new)
+                .toList();
+
+        return responseList;
+    }
+
+    @Override
+    public ScheduleResponseDto findScheduleById() {
         return null;
     }
 }
