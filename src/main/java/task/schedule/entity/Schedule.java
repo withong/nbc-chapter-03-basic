@@ -11,15 +11,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Schedule {
 
-    @Setter
     private Long id;
-
     private Long userId;
     private String authorName;
     private LocalDate date;
     private String content;
     private String password;
-
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

@@ -33,7 +33,6 @@ public class ScheduleRepositoryLv1 implements ScheduleRepository {
         parameters.put("password", schedule.getPassword());
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
-        schedule.setId(key.longValue());
 
         return findScheduleById(schedule.getId()).orElseThrow();
     }
