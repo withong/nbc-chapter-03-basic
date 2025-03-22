@@ -34,7 +34,7 @@ public class ScheduleRepositoryLv1 implements ScheduleRepository {
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
-        return findScheduleById(schedule.getId()).orElseThrow();
+        return findScheduleById(key.longValue()).orElseThrow();
     }
 
     @Override
