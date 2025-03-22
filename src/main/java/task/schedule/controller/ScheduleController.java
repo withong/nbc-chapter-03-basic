@@ -26,9 +26,9 @@ public class ScheduleController {
 
     @GetMapping
     public ResponseEntity<List<ScheduleResponseDto>> findSchedules(
-            @RequestParam("userId") Long userId,
+            @RequestParam("authorName") String authorName,
             @RequestParam(value = "updatedDate", required = false) String updatedDate
     ) {
-        return new ResponseEntity<>(scheduleService.findSchedules(userId, updatedDate), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findSchedules(authorName, updatedDate), HttpStatus.OK);
     }
 }

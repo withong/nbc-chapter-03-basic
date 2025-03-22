@@ -47,11 +47,11 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public List<Schedule> findSchedules(Long userId, String updatedDate) {
-        StringBuilder sql = new StringBuilder("select * from schedules where user_id = ?");
+    public List<Schedule> findSchedules(String authorName, String updatedDate) {
+        StringBuilder sql = new StringBuilder("select * from schedules where author_name = ?");
 
         List<Object> parameters = new ArrayList<>();
-        parameters.add(userId);
+        parameters.add(authorName);
 
         if (updatedDate != null && !updatedDate.isBlank()) {
             sql.append(" and updated_at like ?");

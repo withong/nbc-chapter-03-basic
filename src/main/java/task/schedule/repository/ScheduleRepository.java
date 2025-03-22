@@ -8,5 +8,5 @@ import java.util.List;
 public interface ScheduleRepository {
 
     Schedule saveSchedule(Schedule schedule);
-    List<Schedule> findSchedules(Long userId, String updatedDate);
+    List<Schedule> findSchedules(String authorName, String updatedDate);
 }

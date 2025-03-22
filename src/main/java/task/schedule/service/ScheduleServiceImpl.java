@@ -26,8 +26,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleResponseDto> findSchedules(Long userId, String updatedDate) {
-        List<Schedule> schedules = scheduleRepository.findSchedules(userId, updatedDate);
+    public List<ScheduleResponseDto> findSchedules(String authorName, String updatedDate) {
+        List<Schedule> schedules = scheduleRepository.findSchedules(authorName, updatedDate);
         List<ScheduleResponseDto> responseList = schedules.stream()
                 .map(ScheduleResponseDto::new)
                 .toList();
