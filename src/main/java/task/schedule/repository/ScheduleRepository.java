@@ -10,8 +10,10 @@ import java.util.Optional;
 public interface ScheduleRepository {
 
     ScheduleLv3 saveSchedule(ScheduleLv3 schedule);
-    List<ScheduleLv3> findSchedulesByUserId(Long userId, String authorName, String updatedDate);
-    Optional<ScheduleLv3> findScheduleById(Long id);
-    int updateSchedule(Long id, String authorName, LocalDate date, String content);
+    List<ScheduleResponseDto> findSchedulesByUserId(Long userId, String updatedDate);
+    Optional<ScheduleResponseDto> findScheduleWithUserById(Long id);
+    int updateSchedule(Long id, LocalDate date, String content);
     int deleteSchedule(Long id);
+
+    Optional<ScheduleLv3> findScheduleEntityById(Long id);
 }

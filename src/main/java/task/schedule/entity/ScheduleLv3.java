@@ -11,30 +11,18 @@ import java.time.LocalDateTime;
 public class ScheduleLv3 {
 
     private Long id;
-    private User userId;
-    private User userName;
+    private Long userId;
     private LocalDate date;
     private String content;
     private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ScheduleLv3(User userId, User userName, LocalDate date, String content, String password) {
+    public ScheduleLv3(Long userId, LocalDate date, String content, String password) {
         this.userId = userId;
-        this.userName = userName;
         this.date = date;
         this.content = content;
         this.password = password;
-    }
-
-    public void update(User userName, LocalDate date, String content) {
-        this.userName = userName;
-        this.date = date;
-        this.content = content;
-    }
-
-    public void updateAuthorName(User userName) {
-        this.userName = userName;
     }
 
     public void updateDate(LocalDate date) {

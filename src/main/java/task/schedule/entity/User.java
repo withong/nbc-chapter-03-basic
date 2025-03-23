@@ -15,4 +15,8 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 }

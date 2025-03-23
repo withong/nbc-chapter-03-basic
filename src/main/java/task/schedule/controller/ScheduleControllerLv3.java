@@ -35,8 +35,8 @@ public class ScheduleControllerLv3 {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
+    public ResponseEntity<ScheduleResponseDto> findScheduleWithUserById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(scheduleService.findScheduleWithUserById(id), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
@@ -44,7 +44,7 @@ public class ScheduleControllerLv3 {
             @PathVariable("id") Long id,
             @RequestBody ScheduleRequestDto requestDto
     ) {
-        ScheduleResponseDto before = scheduleService.findScheduleById(id);
+        ScheduleResponseDto before = scheduleService.findScheduleWithUserById(id);
         ScheduleResponseDto after = scheduleService.updateSchedule(id, requestDto);
 
         boolean isSame = before.getUserName().equals(after.getUserName())

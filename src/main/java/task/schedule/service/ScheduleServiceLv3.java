@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
+import task.schedule.dto.UserResponseDto;
 import task.schedule.entity.ScheduleLv3;
 import task.schedule.repository.ScheduleRepository;
 
@@ -15,70 +16,73 @@ import java.util.List;
 public class ScheduleServiceLv3 implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final UserService userService;
 
-    public ScheduleServiceLv3(@Qualifier("scheduleRepositoryLv3") ScheduleRepository scheduleRepository) {
+    public ScheduleServiceLv3(
+            @Qualifier("scheduleRepositoryLv3") ScheduleRepository scheduleRepository,
+            UserService userService
+    ) {
         this.scheduleRepository = scheduleRepository;
+        this.userService = userService;
     }
 
     @Override
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
-        ScheduleLv3 schedule = new ScheduleLv3(requestDto.getUserId(), requestDto.getUserName(),
-                requestDto.getDate(), requestDto.getContent(), requestDto.getPassword());
+        UserResponseDto userResponseDto = userService.findUserById(requestDto.getUserId());
 
-        return new ScheduleResponseDto(scheduleRepository.saveSchedule(schedule));
+        ScheduleLv3 schedule = new ScheduleLv3(
+                userResponseDto.getId(), // 사용자 ID 참조
+                requestDto.getDate(),
+                requestDto.getContent(),
+                requestDto.getPassword()
+        );
+
+        ScheduleLv3 saved = scheduleRepository.saveSchedule(schedule);
+
+        return new ScheduleResponseDto(saved, userResponseDto.getName());
     }
 
     @Override
-    public List<ScheduleResponseDto> findSchedulesByCondition(Long userId, String authorName, String updatedDate) {
-/*
-        List<Schedule> schedules = scheduleRepository.findSchedulesByCondition(authorName, updatedDate);
-        List<ScheduleResponseDto> responseList = schedules.stream()
-                .map(ScheduleResponseDto::new)
-                .toList();
+    public List<ScheduleResponseDto> findSchedulesByUserId(Long userId, String updatedDate) {
+        UserResponseDto userResponseDto = userService.findUserById(userId);
 
-        return responseList;
-*/
-        return null;
+        return scheduleRepository.findSchedulesByUserId(userResponseDto.getId(), updatedDate);
     }
 
     @Override
-    public ScheduleResponseDto findScheduleById(Long id) {
-        ScheduleLv3 schedule = scheduleRepository.findScheduleById(id)
+    public ScheduleResponseDto findScheduleWithUserById(Long id) {
+        return scheduleRepository.findScheduleWithUserById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
-
-        return new ScheduleResponseDto(schedule);
     }
 
     @Override
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
-        ScheduleLv3 schedule = scheduleRepository.findScheduleById(id)
+        ScheduleLv3 schedule = scheduleRepository.findScheduleEntityById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
 
         if (!schedule.getPassword().equals(requestDto.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
         }
 
-        if (requestDto.getUserName() != null) schedule.updateAuthorName(requestDto.getUserName());
         if (requestDto.getDate() != null) schedule.updateDate(requestDto.getDate());
         if (requestDto.getContent() != null) schedule.updateContent(requestDto.getContent());
 
         int result = scheduleRepository.updateSchedule(
-                id, schedule.getUserName(), schedule.getDate(), schedule.getContent()
+                id, schedule.getDate(), schedule.getContent()
         );
 
         if (result == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "일정 변경에 실패했습니다.");
         }
 
-        ScheduleLv3 updated = scheduleRepository.findScheduleById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "데이터를 불러오는 데 실패했습니다."));
-
-        return new ScheduleResponseDto(updated);
+        return scheduleRepository.findScheduleWithUserById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "데이터를 불러오는 데 실패했습니다."));
     }
 
     @Override
     public void deleteSchedule(Long id, ScheduleRequestDto requestDto) {
-        ScheduleLv3 schedule = scheduleRepository.findScheduleById(id)
+        ScheduleLv3 schedule = scheduleRepository.findScheduleEntityById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
 
         if (!schedule.getPassword().equals(requestDto.getPassword())) {
