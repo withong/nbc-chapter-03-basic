@@ -1,4 +1,3 @@
-/*
 package task.schedule.entity;
 
 import lombok.AllArgsConstructor;
@@ -9,33 +8,33 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class Schedule {
+public class ScheduleLv3 {
 
     private Long id;
-    private Long userId;
-    private String authorName;
+    private User userId;
+    private User userName;
     private LocalDate date;
     private String content;
     private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Schedule(Long userId, String authorName, LocalDate date, String content, String password) {
+    public ScheduleLv3(User userId, User userName, LocalDate date, String content, String password) {
         this.userId = userId;
-        this.authorName = authorName;
+        this.userName = userName;
         this.date = date;
         this.content = content;
         this.password = password;
     }
 
-    public void update(String authorName, LocalDate date, String content) {
-        this.authorName = authorName;
+    public void update(User userName, LocalDate date, String content) {
+        this.userName = userName;
         this.date = date;
         this.content = content;
     }
 
-    public void updateAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void updateAuthorName(User userName) {
+        this.userName = userName;
     }
 
     public void updateDate(LocalDate date) {
@@ -46,4 +45,3 @@ public class Schedule {
         this.content = content;
     }
 }
-*/

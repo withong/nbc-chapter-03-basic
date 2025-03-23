@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
+import task.schedule.entity.User;
 import task.schedule.service.ScheduleService;
 
 import java.util.List;
@@ -26,12 +27,11 @@ public class ScheduleControllerLv3 {
     }
 
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> findSchedulesByCondition(
-            @RequestParam(value = "userId", required = false) Long userId,
-            @RequestParam(value = "authorName", required = false) String authorName,
+    public ResponseEntity<List<ScheduleResponseDto>> findSchedulesByUserId(
+            @RequestParam("userId") Long userId,
             @RequestParam(value = "updatedDate", required = false) String updatedDate
     ) {
-        return new ResponseEntity<>(scheduleService.findSchedulesByCondition(userId, authorName, updatedDate), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findSchedulesByUserId(userId, updatedDate), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -47,7 +47,7 @@ public class ScheduleControllerLv3 {
         ScheduleResponseDto before = scheduleService.findScheduleById(id);
         ScheduleResponseDto after = scheduleService.updateSchedule(id, requestDto);
 
-        boolean isSame = before.getAuthorName().equals(after.getAuthorName())
+        boolean isSame = before.getUserName().equals(after.getUserName())
                 && before.getDate().equals(after.getDate())
                 && before.getContent().equals(after.getContent());
 

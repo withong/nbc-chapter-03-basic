@@ -1,7 +1,8 @@
 package task.schedule.dto;
 
 import lombok.Getter;
-import task.schedule.entity.Schedule;
+import task.schedule.entity.ScheduleLv3;
+import task.schedule.entity.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,15 +11,15 @@ import java.time.LocalDateTime;
 public class ScheduleResponseDto {
 
     private Long id;
-    private String authorName;
+    private String userName;
     private LocalDate date;
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ScheduleResponseDto(Schedule schedule) {
+    public ScheduleResponseDto(ScheduleLv3 schedule) {
         this.id = schedule.getId();
-        this.authorName = schedule.getAuthorName();
+        this.userName = schedule.getUserName().getName();
         this.date = schedule.getDate();
         this.content = schedule.getContent();
         this.createdAt = schedule.getCreatedAt();

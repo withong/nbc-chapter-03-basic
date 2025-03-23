@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import task.schedule.entity.Schedule;
+import task.schedule.entity.ScheduleLv3;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
     }
 
     @Override
-    public Schedule saveSchedule(Schedule schedule) {
+    public ScheduleLv3 saveSchedule(ScheduleLv3 schedule) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("schedules").usingGeneratedKeyColumns("id")
                 .usingColumns("user_id", "author_name", "date", "content", "password");
@@ -39,7 +39,7 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
     }
 
     @Override
-    public List<Schedule> findSchedulesByCondition(Long userId, String authorName, String updatedDate) {
+    public List<ScheduleLv3> findSchedulesByCondition(Long userId, String authorName, String updatedDate) {
         StringBuilder sql = new StringBuilder("select * from schedules where author_name = ?");
 
         List<Object> parameters = new ArrayList<>();
@@ -56,9 +56,9 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
     }
 
     @Override
-    public Optional<Schedule> findScheduleById(Long id) {
+    public Optional<ScheduleLv3> findScheduleById(Long id) {
         String sql = "select * from schedules where id = ?";
-        List<Schedule> result = jdbcTemplate.query(sql, scheduleRowMapper(), id);
+        List<ScheduleLv3> result = jdbcTemplate.query(sql, scheduleRowMapper(), id);
 
         return result.stream().findAny();
     }
@@ -77,9 +77,9 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
         return jdbcTemplate.update(sql, id);
     }
 
-    private RowMapper<Schedule> scheduleRowMapper() {
+    private RowMapper<ScheduleLv3> scheduleRowMapper() {
         return (rs, rowNum) -> {
-            Schedule schedule = new Schedule(
+            ScheduleLv3 schedule = new ScheduleLv3(
                     rs.getLong("id"),
                     rs.getLong("user_id"),
                     rs.getString("author_name"),

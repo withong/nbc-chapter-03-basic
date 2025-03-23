@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class ScheduleRequestDto {
 
     private Long userId;
-    private String authorName;
+    private String userName;
     private LocalDate date;
     private String content;
     private String password;
