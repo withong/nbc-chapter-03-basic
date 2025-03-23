@@ -36,7 +36,7 @@ public class UserServiceLv3 implements UserService{
         User user = userRepository.findUserById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자가 존재하지 않습니다."));
 
-        if (requestDto.getName() != null) user.updateName(requestDto.getEmail());
+        if (requestDto.getName() != null) user.updateName(requestDto.getName());
         if (requestDto.getEmail() != null) user.updateEmail(requestDto.getEmail());
 
         int result = userRepository.updateUser(id, user.getName(), user.getEmail());
@@ -54,6 +54,13 @@ public class UserServiceLv3 implements UserService{
 
     @Override
     public void deleteUser(Long id) {
+        userRepository.findUserById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자가 존재하지 않습니다."));
 
+        int result = userRepository.deleteUser(id);
+
+        if (result == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자 삭제에 실패했습니다.");
+        }
     }
 }
