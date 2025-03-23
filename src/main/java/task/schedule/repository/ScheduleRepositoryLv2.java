@@ -70,6 +70,13 @@ public class ScheduleRepositoryLv2 implements ScheduleRepository {
         return jdbcTemplate.update(sql, authorName, date, content, id);
     }
 
+    @Override
+    public int deleteSchedule(Long id) {
+        String sql = "delete from schedules where id = ?";
+
+        return jdbcTemplate.update(sql, id);
+    }
+
     private RowMapper<Schedule> scheduleRowMapper() {
         return (rs, rowNum) -> {
             Schedule schedule = new Schedule(

@@ -68,6 +68,11 @@ public class ScheduleRepositoryLv1 implements ScheduleRepository {
         return 0;
     }
 
+    @Override
+    public int deleteSchedule(Long id) {
+        return 0;
+    }
+
     private RowMapper<Schedule> scheduleRowMapper() {
         return (rs, rowNum) -> {
             Schedule schedule = new Schedule(

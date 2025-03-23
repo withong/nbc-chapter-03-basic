@@ -50,4 +50,9 @@ public class ScheduleServiceLv1 implements ScheduleService {
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
         return null;
     }
+
+    @Override
+    public void deleteSchedule(Long id, ScheduleRequestDto requestDto) {
+
+    }
 }
