@@ -41,8 +41,35 @@ public class ScheduleServiceLv2 implements ScheduleService {
     @Override
     public ScheduleResponseDto findScheduleById(Long id) {
         Schedule schedule = scheduleRepository.findScheduleById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
 
         return new ScheduleResponseDto(schedule);
+    }
+
+    @Override
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
+        Schedule schedule = scheduleRepository.findScheduleById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
+
+        if (!schedule.getPassword().equals(requestDto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+        }
+
+        if (requestDto.getAuthorName() != null) schedule.updateAuthorName(requestDto.getAuthorName());
+        if (requestDto.getDate() != null) schedule.updateDate(requestDto.getDate());
+        if (requestDto.getContent() != null) schedule.updateContent(requestDto.getContent());
+
+        int result = scheduleRepository.updateSchedule(
+                id, schedule.getAuthorName(), schedule.getDate(), schedule.getContent()
+        );
+
+        if (result == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "일정이 존재하지 않거나, 변경할 수 없습니다.");
+        }
+
+        Schedule updated = scheduleRepository.findScheduleById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "데이터를 불러오는 데 실패했습니다."));
+
+        return new ScheduleResponseDto(updated);
     }
 }

@@ -45,4 +45,9 @@ public class ScheduleServiceLv1 implements ScheduleService {
 
         return new ScheduleResponseDto(schedule);
     }
+
+    @Override
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
+        return null;
+    }
 }

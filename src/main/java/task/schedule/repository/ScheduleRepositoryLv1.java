@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import task.schedule.entity.Schedule;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.*;
 
 @Repository
@@ -60,6 +61,11 @@ public class ScheduleRepositoryLv1 implements ScheduleRepository {
         List<Schedule> result = jdbcTemplate.query(sql, scheduleRowMapper(), id);
 
         return result.stream().findAny();
+    }
+
+    @Override
+    public int updateSchedule(Long id, String authorName, LocalDate date, String content) {
+        return 0;
     }
 
     private RowMapper<Schedule> scheduleRowMapper() {

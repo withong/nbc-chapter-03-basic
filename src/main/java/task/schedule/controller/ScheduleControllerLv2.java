@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
+import task.schedule.entity.Schedule;
 import task.schedule.service.ScheduleService;
 
 import java.util.List;
@@ -36,5 +37,24 @@ public class ScheduleControllerLv2 {
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(
+            @PathVariable("id") Long id,
+            @RequestBody ScheduleRequestDto requestDto
+    ) {
+        ScheduleResponseDto before = scheduleService.findScheduleById(id);
+        ScheduleResponseDto after = scheduleService.updateSchedule(id, requestDto);
+
+        boolean isSame = before.getAuthorName().equals(after.getAuthorName())
+                && before.getDate().equals(after.getDate())
+                && before.getContent().equals(after.getContent());
+
+        if (isSame) {
+            return new ResponseEntity<>(after, HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(after, HttpStatus.OK);
     }
 }

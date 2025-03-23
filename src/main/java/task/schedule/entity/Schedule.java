@@ -2,7 +2,6 @@ package task.schedule.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,8 +27,21 @@ public class Schedule {
         this.password = password;
     }
 
-    public void update(LocalDate date, String content) {
+    public void update(String authorName, LocalDate date, String content) {
+        this.authorName = authorName;
         this.date = date;
+        this.content = content;
+    }
+
+    public void updateAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public void updateDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void updateContent(String content) {
         this.content = content;
     }
 }
