@@ -1,4 +1,3 @@
-/*
 package task.schedule.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,11 +12,11 @@ import task.schedule.repository.ScheduleRepository;
 import java.util.List;
 
 @Service
-public class ScheduleServiceLv2 implements ScheduleService {
+public class ScheduleServiceLv3 implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleServiceLv2(@Qualifier("scheduleRepositoryLv2") ScheduleRepository scheduleRepository) {
+    public ScheduleServiceLv3(@Qualifier("scheduleRepositoryLv3") ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
     }
 
@@ -30,13 +29,16 @@ public class ScheduleServiceLv2 implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleResponseDto> findSchedules(String authorName, String updatedDate) {
-        List<Schedule> schedules = scheduleRepository.findSchedules(authorName, updatedDate);
+    public List<ScheduleResponseDto> findSchedulesByCondition(Long userId, String authorName, String updatedDate) {
+/*
+        List<Schedule> schedules = scheduleRepository.findSchedulesByCondition(authorName, updatedDate);
         List<ScheduleResponseDto> responseList = schedules.stream()
                 .map(ScheduleResponseDto::new)
                 .toList();
 
         return responseList;
+*/
+        return null;
     }
 
     @Override
@@ -90,4 +92,3 @@ public class ScheduleServiceLv2 implements ScheduleService {
         }
     }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package task.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,18 +6,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
-import task.schedule.entity.Schedule;
 import task.schedule.service.ScheduleService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/lv2/schedules")
-public class ScheduleControllerLv2 {
+@RequestMapping("/lv3/schedules")
+public class ScheduleControllerLv3 {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleControllerLv2(@Qualifier("scheduleServiceLv2") ScheduleService scheduleService) {
+    public ScheduleControllerLv3(@Qualifier("scheduleServiceLv3") ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
@@ -28,11 +26,12 @@ public class ScheduleControllerLv2 {
     }
 
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> findSchedules(
-            @RequestParam("authorName") String authorName,
+    public ResponseEntity<List<ScheduleResponseDto>> findSchedulesByCondition(
+            @RequestParam(value = "userId", required = false) Long userId,
+            @RequestParam(value = "authorName", required = false) String authorName,
             @RequestParam(value = "updatedDate", required = false) String updatedDate
     ) {
-        return new ResponseEntity<>(scheduleService.findSchedules(authorName, updatedDate), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findSchedulesByCondition(userId, authorName, updatedDate), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -69,4 +68,3 @@ public class ScheduleControllerLv2 {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-*/

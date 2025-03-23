@@ -1,4 +1,3 @@
-/*
 package task.schedule.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,11 +12,11 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Repository
-public class ScheduleRepositoryLv1 implements ScheduleRepository {
+public class ScheduleRepositoryLv3 implements ScheduleRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public ScheduleRepositoryLv1(DataSource dataSource) {
+    public ScheduleRepositoryLv3(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -40,7 +39,7 @@ public class ScheduleRepositoryLv1 implements ScheduleRepository {
     }
 
     @Override
-    public List<Schedule> findSchedules(String authorName, String updatedDate) {
+    public List<Schedule> findSchedulesByCondition(Long userId, String authorName, String updatedDate) {
         StringBuilder sql = new StringBuilder("select * from schedules where author_name = ?");
 
         List<Object> parameters = new ArrayList<>();
@@ -64,6 +63,20 @@ public class ScheduleRepositoryLv1 implements ScheduleRepository {
         return result.stream().findAny();
     }
 
+    @Override
+    public int updateSchedule(Long id, String authorName, LocalDate date, String content) {
+        String sql = "update schedules set author_name = ?, date = ?, content = ? where id = ?";
+
+        return jdbcTemplate.update(sql, authorName, date, content, id);
+    }
+
+    @Override
+    public int deleteSchedule(Long id) {
+        String sql = "delete from schedules where id = ?";
+
+        return jdbcTemplate.update(sql, id);
+    }
+
     private RowMapper<Schedule> scheduleRowMapper() {
         return (rs, rowNum) -> {
             Schedule schedule = new Schedule(
@@ -80,4 +93,3 @@ public class ScheduleRepositoryLv1 implements ScheduleRepository {
         };
     }
 }
-*/

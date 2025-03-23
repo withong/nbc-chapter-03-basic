@@ -1,3 +1,4 @@
+/*
 package task.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,3 +39,4 @@ public class ScheduleControllerLv1 {
         return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
     }
 }
+*/
