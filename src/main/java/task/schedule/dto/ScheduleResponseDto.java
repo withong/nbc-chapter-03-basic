@@ -3,7 +3,6 @@ package task.schedule.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import task.schedule.entity.ScheduleLv3;
-import task.schedule.entity.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

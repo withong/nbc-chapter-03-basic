@@ -19,4 +19,12 @@ public class User {
         this.name = name;
         this.email = email;
     }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
 }

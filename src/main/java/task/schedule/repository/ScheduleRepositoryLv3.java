@@ -62,7 +62,7 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
 
     @Override
     public Optional<ScheduleResponseDto> findScheduleWithUserById(Long id) {
-        String sql = "select s.id, u.name as user_name, s.date, s.content, s.craeted_at, s.updated_at " +
+        String sql = "select s.id, u.name as user_name, s.date, s.content, s.created_at, s.updated_at " +
                 "from schedules s join users u on u.id = s.user_id " +
                 "where s.id = ?";
 

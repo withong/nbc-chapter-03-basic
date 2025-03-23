@@ -47,12 +47,16 @@ public class UserRepositoryLv3 implements UserRepository{
 
     @Override
     public int updateUser(Long id, String name, String email) {
-        return 0;
+        String sql = "update users set name = ?, email = ? where id = ?";
+
+        return jdbcTemplate.update(sql, name, email, id);
     }
 
     @Override
     public int deleteUser(Long id) {
-        return 0;
+        String sql = "delete from users where id = ?";
+
+        return jdbcTemplate.update(sql, id);
     }
 
     private RowMapper<User> userRowMapper() {

@@ -33,7 +33,23 @@ public class UserServiceLv3 implements UserService{
 
     @Override
     public UserResponseDto updateUser(Long id, UserRequestDto requestDto) {
-        return null;
+        User user = userRepository.findUserById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자가 존재하지 않습니다."));
+
+        if (requestDto.getName() != null) user.updateName(requestDto.getEmail());
+        if (requestDto.getEmail() != null) user.updateEmail(requestDto.getEmail());
+
+        int result = userRepository.updateUser(id, user.getName(), user.getEmail());
+
+        if (result == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "사용자 정보 수정에 실패했습니다.");
+        }
+
+        User updated = userRepository.findUserById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "데이터를 불러오는 데 실패했습니다."));
+
+        return new UserResponseDto(updated);
     }
 
     @Override

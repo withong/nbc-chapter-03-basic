@@ -1,12 +1,10 @@
 package task.schedule.controller;
 
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import task.schedule.dto.UserRequestDto;
 import task.schedule.dto.UserResponseDto;
-import task.schedule.entity.User;
 import task.schedule.service.UserService;
 
 @RestController
@@ -33,9 +31,18 @@ public class UserController {
     public ResponseEntity<UserResponseDto> updateUser(
             @PathVariable("id") Long id,
             @RequestBody UserRequestDto requestDto
-
     ) {
-        return new ResponseEntity<>(userService.updateUser(id, requestDto), HttpStatus.OK);
+        UserResponseDto before = userService.findUserById(id);
+        UserResponseDto after = userService.updateUser(id, requestDto);
+
+        boolean isSame = before.getName().equals(after.getName())
+                && before.getEmail().equals(after.getEmail());
+
+        if (isSame) {
+            return new ResponseEntity<>(after, HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(after, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
