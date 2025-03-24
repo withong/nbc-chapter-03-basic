@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import task.schedule.dto.UserRequestDto;
 import task.schedule.dto.UserResponseDto;
+import task.schedule.dto.UserUpdateRequestDto;
 import task.schedule.service.UserService;
 
 @RestController
@@ -36,7 +37,7 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(
             @NotNull(message = "ID는 필수 값입니다.") @PathVariable("id") Long id,
-            @RequestBody @Valid UserRequestDto requestDto
+            @RequestBody @Valid UserUpdateRequestDto requestDto
     ) {
         return new ResponseEntity<>(userService.updateUser(id, requestDto), HttpStatus.OK);
     }

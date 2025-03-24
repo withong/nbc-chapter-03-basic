@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import task.schedule.dto.UserRequestDto;
 import task.schedule.dto.UserResponseDto;
+import task.schedule.dto.UserUpdateRequestDto;
 import task.schedule.entity.User;
 import task.schedule.exception.CustomException;
 import task.schedule.exception.ExceptionCode;
@@ -34,7 +35,7 @@ public class UserServiceLv5 implements UserService{
     }
 
     @Override
-    public UserResponseDto updateUser(Long id, UserRequestDto requestDto) {
+    public UserResponseDto updateUser(Long id, UserUpdateRequestDto requestDto) {
         User user = userRepository.findUserById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_USER));
 
