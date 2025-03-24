@@ -11,12 +11,12 @@ import task.schedule.service.ScheduleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lv3/schedules")
+@RequestMapping("/lv4/schedules")
 public class ScheduleControllerLv4 {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleControllerLv4(@Qualifier("scheduleServiceLv3") ScheduleService scheduleService) {
+    public ScheduleControllerLv4(@Qualifier("scheduleServiceLv4") ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 

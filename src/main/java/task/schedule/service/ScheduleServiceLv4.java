@@ -20,7 +20,7 @@ public class ScheduleServiceLv4 implements ScheduleService {
     private final UserService userService;
 
     public ScheduleServiceLv4(
-            @Qualifier("scheduleRepositoryLv3") ScheduleRepository scheduleRepository,
+            @Qualifier("scheduleRepositoryLv4") ScheduleRepository scheduleRepository,
             UserService userService
     ) {
         this.scheduleRepository = scheduleRepository;
