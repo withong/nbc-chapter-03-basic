@@ -1,3 +1,4 @@
+/*
 package task.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,8 +30,8 @@ public class ScheduleControllerLv5 {
     public ResponseEntity<List<ScheduleResponseDto>> findSchedulesWithUserByUserId(
             @RequestParam("userId") Long userId,
             @RequestParam(value = "updatedDate", required = false) String updatedDate,
-            @RequestParam(value = "page", required = false) Integer page,
-            @RequestParam(value = "size", required = false) Integer size
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "size", defaultValue = "5") Integer size
     ) {
         return new ResponseEntity<>(scheduleService.findSchedulesWithUserByUserId(
                 userId, updatedDate, page, size), HttpStatus.OK);
@@ -59,3 +60,4 @@ public class ScheduleControllerLv5 {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+*/

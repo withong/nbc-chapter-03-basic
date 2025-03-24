@@ -52,8 +52,6 @@ public class ScheduleServiceLv5 implements ScheduleService {
     ) {
         UserResponseDto userResponseDto = userService.findUserById(userId);
 
-        if (page == null || page == 0) page = 1;
-        if (size == null) size = 5;
         int offset = (page-1) * size;
 
         PageResponseDto pageResponseDto = new PageResponseDto(page, size, offset);
