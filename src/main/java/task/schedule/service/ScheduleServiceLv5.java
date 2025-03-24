@@ -13,6 +13,7 @@ import task.schedule.exception.CustomException;
 import task.schedule.exception.ExceptionCode;
 import task.schedule.repository.ScheduleRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -80,8 +81,15 @@ public class ScheduleServiceLv5 implements ScheduleService {
             throw new CustomException(ExceptionCode.INVALID_PASSWORD);
         }
 
+        LocalDate beforeDate = schedule.getDate();
+        String beforeContent = schedule.getContent();
+
         if (requestDto.getDate() != null) schedule.updateDate(requestDto.getDate());
         if (requestDto.getContent() != null) schedule.updateContent(requestDto.getContent());
+
+        if (beforeDate.equals(schedule.getDate()) && beforeContent.equals(schedule.getContent())) {
+            throw new CustomException(ExceptionCode.NO_CHANGES);
+        }
 
         int result = scheduleRepository.updateSchedule(
                 id, schedule.getDate(), schedule.getContent()

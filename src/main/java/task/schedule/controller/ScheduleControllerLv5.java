@@ -1,4 +1,3 @@
-/*
 package task.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,12 +11,12 @@ import task.schedule.service.ScheduleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lv4/schedules")
-public class ScheduleControllerLv4 {
+@RequestMapping("/lv5/schedules")
+public class ScheduleControllerLv5 {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleControllerLv4(@Qualifier("scheduleServiceLv4") ScheduleService scheduleService) {
+    public ScheduleControllerLv5(@Qualifier("scheduleServiceLv5") ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
@@ -47,18 +46,7 @@ public class ScheduleControllerLv4 {
             @PathVariable("id") Long id,
             @RequestBody ScheduleRequestDto requestDto
     ) {
-        ScheduleResponseDto before = scheduleService.findScheduleWithUserById(id);
-        ScheduleResponseDto after = scheduleService.updateSchedule(id, requestDto);
-
-        boolean isSame = before.getUserName().equals(after.getUserName())
-                && before.getDate().equals(after.getDate())
-                && before.getContent().equals(after.getContent());
-
-        if (isSame) {
-            return new ResponseEntity<>(after, HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(after, HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -71,4 +59,3 @@ public class ScheduleControllerLv4 {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-*/

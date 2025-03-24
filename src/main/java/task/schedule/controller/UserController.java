@@ -32,17 +32,7 @@ public class UserController {
             @PathVariable("id") Long id,
             @RequestBody UserRequestDto requestDto
     ) {
-        UserResponseDto before = userService.findUserById(id);
-        UserResponseDto after = userService.updateUser(id, requestDto);
-
-        boolean isSame = before.getName().equals(after.getName())
-                && before.getEmail().equals(after.getEmail());
-
-        if (isSame) {
-            return new ResponseEntity<>(after, HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(after, HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUser(id, requestDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

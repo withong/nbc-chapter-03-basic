@@ -38,8 +38,15 @@ public class UserServiceLv5 implements UserService{
         User user = userRepository.findUserById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_USER));
 
+        String beforeName = user.getName();
+        String beforeEmail = user.getEmail();
+
         if (requestDto.getName() != null) user.updateName(requestDto.getName());
         if (requestDto.getEmail() != null) user.updateEmail(requestDto.getEmail());
+
+        if (beforeName.equals(user.getName()) && beforeEmail.equals(user.getEmail())) {
+            throw new CustomException(ExceptionCode.NO_CHANGES);
+        }
 
         int result = userRepository.updateUser(id, user.getName(), user.getEmail());
 
