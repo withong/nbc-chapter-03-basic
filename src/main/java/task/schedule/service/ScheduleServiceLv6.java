@@ -1,10 +1,7 @@
-/*
 package task.schedule.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import task.schedule.dto.PageResponseDto;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
@@ -18,12 +15,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class ScheduleServiceLv5 implements ScheduleService {
+public class ScheduleServiceLv6 implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final UserService userService;
 
-    public ScheduleServiceLv5(
+    public ScheduleServiceLv6(
             @Qualifier("scheduleRepositoryLv4") ScheduleRepository scheduleRepository,
             UserService userService
     ) {
@@ -49,9 +46,11 @@ public class ScheduleServiceLv5 implements ScheduleService {
 
     @Override
     public List<ScheduleResponseDto> findSchedulesWithUserByUserId(
-            Long userId, String updatedDate, Integer page, Integer size
+            Long userId, LocalDate updatedDate, Integer page, Integer size
     ) {
         UserResponseDto userResponseDto = userService.findUserById(userId);
+
+        String updatedDateStr = updatedDate != null ? updatedDate.toString() : null;
 
         int offset = (page-1) * size;
 
@@ -59,7 +58,7 @@ public class ScheduleServiceLv5 implements ScheduleService {
 
         return scheduleRepository.findSchedulesWithUserByUserId(
                 userResponseDto.getId(),
-                updatedDate,
+                updatedDateStr,
                 pageResponseDto.getSize(),
                 pageResponseDto.getOffset()
         );
@@ -118,4 +117,3 @@ public class ScheduleServiceLv5 implements ScheduleService {
         }
     }
 }
-*/
