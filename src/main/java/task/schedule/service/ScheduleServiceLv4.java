@@ -1,10 +1,10 @@
-/*
 package task.schedule.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import task.schedule.dto.PageResponseDto;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.dto.UserResponseDto;
@@ -14,12 +14,12 @@ import task.schedule.repository.ScheduleRepository;
 import java.util.List;
 
 @Service
-public class ScheduleServiceLv3 implements ScheduleService {
+public class ScheduleServiceLv4 implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final UserService userService;
 
-    public ScheduleServiceLv3(
+    public ScheduleServiceLv4(
             @Qualifier("scheduleRepositoryLv3") ScheduleRepository scheduleRepository,
             UserService userService
     ) {
@@ -44,10 +44,23 @@ public class ScheduleServiceLv3 implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleResponseDto> findSchedulesByUserId(Long userId, String updatedDate) {
+    public List<ScheduleResponseDto> findSchedulesWithUserByUserId(
+            Long userId, String updatedDate, Integer page, Integer size
+    ) {
         UserResponseDto userResponseDto = userService.findUserById(userId);
 
-        return scheduleRepository.findSchedulesByUserId(userResponseDto.getId(), updatedDate);
+        if (page == null || page == 0) page = 1;
+        if (size == null) size = 5;
+        int offset = (page-1) * size;
+
+        PageResponseDto pageResponseDto = new PageResponseDto(page, size, offset);
+
+        return scheduleRepository.findSchedulesWithUserByUserId(
+                userResponseDto.getId(),
+                updatedDate,
+                pageResponseDto.getSize(),
+                pageResponseDto.getOffset()
+        );
     }
 
     @Override
@@ -97,4 +110,3 @@ public class ScheduleServiceLv3 implements ScheduleService {
         }
     }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package task.schedule.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,11 +13,11 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Repository
-public class ScheduleRepositoryLv3 implements ScheduleRepository {
+public class ScheduleRepositoryLv4 implements ScheduleRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public ScheduleRepositoryLv3(DataSource dataSource) {
+    public ScheduleRepositoryLv4(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -40,7 +39,7 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleResponseDto> findSchedulesByUserId(Long userId, String updatedDate) {
+    public List<ScheduleResponseDto> findSchedulesWithUserByUserId(Long userId, String updatedDate, Integer limit, Integer offset) {
         StringBuilder sql = new StringBuilder(
                 "select s.id, u.name as user_name, s.date, s.content, s.created_at, s.updated_at " +
                 "from schedules s " +
@@ -57,6 +56,7 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
         }
 
         sql.append(" order by s.updated_at desc");
+        sql.append(" limit ").append(limit).append(" offset ").append(offset);
 
         return jdbcTemplate.query(sql.toString(), responseDtoRowMapper(), parameters.toArray());
     }
@@ -123,4 +123,3 @@ public class ScheduleRepositoryLv3 implements ScheduleRepository {
         };
     }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package task.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,11 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lv3/schedules")
-public class ScheduleControllerLv3 {
+public class ScheduleControllerLv4 {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleControllerLv3(@Qualifier("scheduleServiceLv3") ScheduleService scheduleService) {
+    public ScheduleControllerLv4(@Qualifier("scheduleServiceLv3") ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
@@ -27,11 +26,14 @@ public class ScheduleControllerLv3 {
     }
 
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> findSchedulesByUserId(
+    public ResponseEntity<List<ScheduleResponseDto>> findSchedulesWithUserByUserId(
             @RequestParam("userId") Long userId,
-            @RequestParam(value = "updatedDate", required = false) String updatedDate
+            @RequestParam(value = "updatedDate", required = false) String updatedDate,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer size
     ) {
-        return new ResponseEntity<>(scheduleService.findSchedulesByUserId(userId, updatedDate), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findSchedulesWithUserByUserId(
+                userId, updatedDate, page, size), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -68,4 +70,3 @@ public class ScheduleControllerLv3 {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-*/
