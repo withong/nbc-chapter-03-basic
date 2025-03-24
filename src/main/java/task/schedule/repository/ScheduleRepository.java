@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ScheduleRepository {
 
     ScheduleLv3 saveSchedule(ScheduleLv3 schedule);
-    List<ScheduleResponseDto> findSchedulesByUserId(Long userId, String updatedDate);
+    List<ScheduleResponseDto> findSchedulesWithUserByUserId(Long userId, String updatedDate, Integer limit, Integer offset);
     Optional<ScheduleResponseDto> findScheduleWithUserById(Long id);
     int updateSchedule(Long id, LocalDate date, String content);
     int deleteSchedule(Long id);

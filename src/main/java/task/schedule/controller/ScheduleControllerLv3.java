@@ -26,11 +26,14 @@ public class ScheduleControllerLv3 {
     }
 
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> findSchedulesByUserId(
+    public ResponseEntity<List<ScheduleResponseDto>> findSchedulesWithUserByUserId(
             @RequestParam("userId") Long userId,
-            @RequestParam(value = "updatedDate", required = false) String updatedDate
+            @RequestParam(value = "updatedDate", required = false) String updatedDate,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer size
     ) {
-        return new ResponseEntity<>(scheduleService.findSchedulesByUserId(userId, updatedDate), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.findSchedulesWithUserByUserId(
+                userId, updatedDate, page, size), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
