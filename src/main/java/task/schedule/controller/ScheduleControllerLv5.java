@@ -1,4 +1,3 @@
-/*
 package task.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,12 +11,12 @@ import task.schedule.service.ScheduleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lv4/schedules")
-public class ScheduleControllerLv4 {
+@RequestMapping("/lv5/schedules")
+public class ScheduleControllerLv5 {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleControllerLv4(@Qualifier("scheduleServiceLv4") ScheduleService scheduleService) {
+    public ScheduleControllerLv5(@Qualifier("scheduleServiceLv5") ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
@@ -71,4 +70,3 @@ public class ScheduleControllerLv4 {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-*/

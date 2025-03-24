@@ -1,4 +1,3 @@
-/*
 package task.schedule.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,17 +9,19 @@ import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.dto.UserResponseDto;
 import task.schedule.entity.ScheduleLv3;
+import task.schedule.exception.CustomException;
+import task.schedule.exception.ExceptionCode;
 import task.schedule.repository.ScheduleRepository;
 
 import java.util.List;
 
 @Service
-public class ScheduleServiceLv4 implements ScheduleService {
+public class ScheduleServiceLv5 implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final UserService userService;
 
-    public ScheduleServiceLv4(
+    public ScheduleServiceLv5(
             @Qualifier("scheduleRepositoryLv4") ScheduleRepository scheduleRepository,
             UserService userService
     ) {
@@ -67,16 +68,16 @@ public class ScheduleServiceLv4 implements ScheduleService {
     @Override
     public ScheduleResponseDto findScheduleWithUserById(Long id) {
         return scheduleRepository.findScheduleWithUserById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SCHEDULE));
     }
 
     @Override
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
         ScheduleLv3 schedule = scheduleRepository.findScheduleEntityById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SCHEDULE));
 
         if (!schedule.getPassword().equals(requestDto.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ExceptionCode.INVALID_PASSWORD);
         }
 
         if (requestDto.getDate() != null) schedule.updateDate(requestDto.getDate());
@@ -87,28 +88,26 @@ public class ScheduleServiceLv4 implements ScheduleService {
         );
 
         if (result == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "일정 변경에 실패했습니다.");
+            throw new CustomException(ExceptionCode.UPDATE_FAILED);
         }
 
         return scheduleRepository.findScheduleWithUserById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                        "데이터를 불러오는 데 실패했습니다."));
+                .orElseThrow(() -> new CustomException(ExceptionCode.RELOAD_FAILED));
     }
 
     @Override
     public void deleteSchedule(Long id, ScheduleRequestDto requestDto) {
         ScheduleLv3 schedule = scheduleRepository.findScheduleEntityById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SCHEDULE));
 
         if (!schedule.getPassword().equals(requestDto.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ExceptionCode.INVALID_PASSWORD);
         }
 
         int result = scheduleRepository.deleteSchedule(id);
 
         if (result == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "일정 삭제에 실패했습니다.");
+            throw new CustomException(ExceptionCode.DELETE_FAILED);
         }
     }
 }
-*/
