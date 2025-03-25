@@ -91,6 +91,13 @@ public class ScheduleRepositoryLv4 implements ScheduleRepository {
     }
 
     @Override
+    public void deleteSchedulesByUserId(Long userId) {
+        String sql = "delete from schedules where user_id = ?";
+
+        jdbcTemplate.update(sql, userId);
+    }
+
+    @Override
     public Optional<ScheduleLv3> findScheduleEntityById(Long id) {
         String sql = "select * from schedules where id = ?";
         List<ScheduleLv3> result = jdbcTemplate.query(sql, scheduleRowMapper(), id);

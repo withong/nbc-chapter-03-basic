@@ -22,5 +22,7 @@ public interface ScheduleRepository {
 
     int deleteSchedule(Long id);
 
+    void deleteSchedulesByUserId(Long userId);
+
     Optional<ScheduleLv3> findScheduleEntityById(Long id);
 }

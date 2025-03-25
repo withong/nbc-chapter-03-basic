@@ -9,15 +9,18 @@ import task.schedule.dto.UserUpdateRequestDto;
 import task.schedule.entity.User;
 import task.schedule.exception.CustomException;
 import task.schedule.exception.ExceptionCode;
+import task.schedule.repository.ScheduleRepository;
 import task.schedule.repository.UserRepository;
 
 @Service
 public class UserServiceLv5 implements UserService{
 
     private final UserRepository userRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    public UserServiceLv5(UserRepository userRepository) {
+    public UserServiceLv5(UserRepository userRepository, ScheduleRepository scheduleRepository) {
         this.userRepository = userRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     @Override
@@ -65,6 +68,8 @@ public class UserServiceLv5 implements UserService{
     public void deleteUser(Long id) {
         userRepository.findUserById(id)
             .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_USER));
+
+        scheduleRepository.deleteSchedulesByUserId(id);
 
         int result = userRepository.deleteUser(id);
 
