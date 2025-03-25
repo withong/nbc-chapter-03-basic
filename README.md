@@ -20,7 +20,7 @@ task.schedule
 ## 4. ERD
 ![erd](erd.png)
 
-<br>
+---
 
 ## 5. 기능 명세서
 
