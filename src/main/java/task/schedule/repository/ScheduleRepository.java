@@ -1,7 +1,7 @@
 package task.schedule.repository;
 
 import task.schedule.dto.ScheduleResponseDto;
-import task.schedule.entity.ScheduleLv3;
+import task.schedule.entity.Schedule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ScheduleRepository {
 
-    ScheduleLv3 saveSchedule(ScheduleLv3 schedule);
+    Schedule saveSchedule(Schedule schedule);
 
     List<ScheduleResponseDto> findSchedulesWithUserByUserId(
             Long userId, LocalDateTime start, LocalDateTime end, Integer limit, Integer offset
@@ -24,5 +24,5 @@ public interface ScheduleRepository {
 
     void deleteSchedulesByUserId(Long userId);
 
-    Optional<ScheduleLv3> findScheduleEntityById(Long id);
+    Optional<Schedule> findScheduleEntityById(Long id);
 }

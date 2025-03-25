@@ -14,11 +14,11 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class UserRepositoryLv3 implements UserRepository{
+public class UserRepositoryImpl implements UserRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    public UserRepositoryLv3(DataSource dataSource) {
+    public UserRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

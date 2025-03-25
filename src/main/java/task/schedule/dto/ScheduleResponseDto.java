@@ -2,7 +2,7 @@ package task.schedule.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import task.schedule.entity.ScheduleLv3;
+import task.schedule.entity.Schedule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ public class ScheduleResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ScheduleResponseDto(ScheduleLv3 schedule, String userName) {
+    public ScheduleResponseDto(Schedule schedule, String userName) {
         this.id = schedule.getId();
         this.userName = userName;
         this.date = schedule.getDate();

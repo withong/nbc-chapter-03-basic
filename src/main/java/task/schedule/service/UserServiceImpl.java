@@ -1,8 +1,6 @@
 package task.schedule.service;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import task.schedule.dto.UserRequestDto;
 import task.schedule.dto.UserResponseDto;
 import task.schedule.dto.UserUpdateRequestDto;
@@ -13,12 +11,12 @@ import task.schedule.repository.ScheduleRepository;
 import task.schedule.repository.UserRepository;
 
 @Service
-public class UserServiceLv5 implements UserService{
+public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final ScheduleRepository scheduleRepository;
 
-    public UserServiceLv5(UserRepository userRepository, ScheduleRepository scheduleRepository) {
+    public UserServiceImpl(UserRepository userRepository, ScheduleRepository scheduleRepository) {
         this.userRepository = userRepository;
         this.scheduleRepository = scheduleRepository;
     }

@@ -1,10 +1,8 @@
 package task.schedule.controller;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,17 +12,16 @@ import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.service.ScheduleService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @Validated
-@RequestMapping("/lv6/schedules")
-public class ScheduleControllerLv6 {
+@RequestMapping("/schedules")
+public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleControllerLv6(@Qualifier("scheduleServiceLv6") ScheduleService scheduleService) {
+    public ScheduleController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 

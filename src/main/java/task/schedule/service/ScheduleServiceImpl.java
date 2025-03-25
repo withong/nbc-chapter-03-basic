@@ -6,7 +6,7 @@ import task.schedule.dto.PageResponseDto;
 import task.schedule.dto.ScheduleRequestDto;
 import task.schedule.dto.ScheduleResponseDto;
 import task.schedule.dto.UserResponseDto;
-import task.schedule.entity.ScheduleLv3;
+import task.schedule.entity.Schedule;
 import task.schedule.exception.CustomException;
 import task.schedule.exception.ExceptionCode;
 import task.schedule.repository.ScheduleRepository;
@@ -16,13 +16,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ScheduleServiceLv6 implements ScheduleService {
+public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final UserService userService;
 
-    public ScheduleServiceLv6(
-            @Qualifier("scheduleRepositoryLv4") ScheduleRepository scheduleRepository,
+    public ScheduleServiceImpl(
+            ScheduleRepository scheduleRepository,
             UserService userService
     ) {
         this.scheduleRepository = scheduleRepository;
@@ -33,14 +33,14 @@ public class ScheduleServiceLv6 implements ScheduleService {
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
         UserResponseDto userResponseDto = userService.findUserById(requestDto.getUserId());
 
-        ScheduleLv3 schedule = new ScheduleLv3(
+        Schedule schedule = new Schedule(
                 userResponseDto.getId(), // 사용자 ID 참조
                 requestDto.getDate(),
                 requestDto.getContent(),
                 requestDto.getPassword()
         );
 
-        ScheduleLv3 saved = scheduleRepository.saveSchedule(schedule);
+        Schedule saved = scheduleRepository.saveSchedule(schedule);
 
         return new ScheduleResponseDto(saved, userResponseDto.getName());
     }
@@ -79,7 +79,7 @@ public class ScheduleServiceLv6 implements ScheduleService {
 
     @Override
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
-        ScheduleLv3 schedule = scheduleRepository.findScheduleEntityById(id)
+        Schedule schedule = scheduleRepository.findScheduleEntityById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SCHEDULE));
 
         if (!schedule.getPassword().equals(requestDto.getPassword())) {
@@ -110,7 +110,7 @@ public class ScheduleServiceLv6 implements ScheduleService {
 
     @Override
     public void deleteSchedule(Long id, ScheduleRequestDto requestDto) {
-        ScheduleLv3 schedule = scheduleRepository.findScheduleEntityById(id)
+        Schedule schedule = scheduleRepository.findScheduleEntityById(id)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SCHEDULE));
 
         if (!schedule.getPassword().equals(requestDto.getPassword())) {

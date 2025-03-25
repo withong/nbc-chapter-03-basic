@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import task.schedule.dto.ScheduleResponseDto;
-import task.schedule.entity.ScheduleLv3;
+import task.schedule.entity.Schedule;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
-public class ScheduleRepositoryLv4 implements ScheduleRepository {
+public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public ScheduleRepositoryLv4(DataSource dataSource) {
+    public ScheduleRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
-    public ScheduleLv3 saveSchedule(ScheduleLv3 schedule) {
+    public Schedule saveSchedule(Schedule schedule) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("schedules").usingGeneratedKeyColumns("id")
                 .usingColumns("user_id", "date", "content", "password");
@@ -98,9 +98,9 @@ public class ScheduleRepositoryLv4 implements ScheduleRepository {
     }
 
     @Override
-    public Optional<ScheduleLv3> findScheduleEntityById(Long id) {
+    public Optional<Schedule> findScheduleEntityById(Long id) {
         String sql = "select * from schedules where id = ?";
-        List<ScheduleLv3> result = jdbcTemplate.query(sql, scheduleRowMapper(), id);
+        List<Schedule> result = jdbcTemplate.query(sql, scheduleRowMapper(), id);
 
         return result.stream().findAny();
     }
@@ -119,9 +119,9 @@ public class ScheduleRepositoryLv4 implements ScheduleRepository {
         };
     }
 
-    private RowMapper<ScheduleLv3> scheduleRowMapper() {
+    private RowMapper<Schedule> scheduleRowMapper() {
         return (rs, rowNum) -> {
-            ScheduleLv3 schedule = new ScheduleLv3(
+            Schedule schedule = new Schedule(
                     rs.getLong("id"),
                     rs.getLong("user_id"),
                     rs.getDate("date").toLocalDate(),
