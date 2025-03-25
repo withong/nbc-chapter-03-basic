@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+/**
+ * 예외 코드 정의 enum
+ */
 @Getter
 @AllArgsConstructor
 public enum ExceptionCode {
@@ -18,7 +21,18 @@ public enum ExceptionCode {
     NO_CHANGES(HttpStatus.NO_CONTENT, "NO_CHANGES", "변경된 내용이 없습니다."),
     RELOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "RELOAD_FAILED", "데이터를 불러오는 데 실패했습니다.");
 
+    /**
+     * Http 상태 코드
+     */
     private final HttpStatus status;
+
+    /**
+     * 사용자 정의 예외 코드
+     */
     private final String code;
+
+    /**
+     * 예외 메시지
+     */
     private final String message;
 }
