@@ -10,6 +10,7 @@ import task.schedule.entity.ScheduleLv3;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
@@ -39,7 +40,7 @@ public class ScheduleRepositoryLv4 implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleResponseDto> findSchedulesWithUserByUserId(Long userId, String updatedDate, Integer limit, Integer offset) {
+    public List<ScheduleResponseDto> findSchedulesWithUserByUserId(Long userId, LocalDateTime start, LocalDateTime end, Integer limit, Integer offset) {
         StringBuilder sql = new StringBuilder(
                 "select s.id, u.name as user_name, s.date, s.content, s.created_at, s.updated_at " +
                 "from schedules s " +
@@ -50,13 +51,16 @@ public class ScheduleRepositoryLv4 implements ScheduleRepository {
         List<Object> parameters = new ArrayList<>();
         parameters.add(userId);
 
-        if (updatedDate != null && !updatedDate.isBlank()) {
-            sql.append(" and s.updated_at like ?");
-            parameters.add(updatedDate + "%");
+        if (start != null && end != null) {
+            sql.append(" and s.updated_at >= ? and s.updated_at < ?");
+            parameters.add(start);
+            parameters.add(end);
         }
 
         sql.append(" order by s.updated_at desc");
-        sql.append(" limit ").append(limit).append(" offset ").append(offset);
+        sql.append(" limit ? offset ?");
+        parameters.add(limit);
+        parameters.add(offset);
 
         return jdbcTemplate.query(sql.toString(), responseDtoRowMapper(), parameters.toArray());
     }

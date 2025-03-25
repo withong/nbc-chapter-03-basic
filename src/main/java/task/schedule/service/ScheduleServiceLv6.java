@@ -12,6 +12,7 @@ import task.schedule.exception.ExceptionCode;
 import task.schedule.repository.ScheduleRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -50,15 +51,21 @@ public class ScheduleServiceLv6 implements ScheduleService {
     ) {
         UserResponseDto userResponseDto = userService.findUserById(userId);
 
-        String updatedDateStr = updatedDate != null ? updatedDate.toString() : null;
-
         int offset = (page-1) * size;
-
         PageResponseDto pageResponseDto = new PageResponseDto(page, size, offset);
+
+        LocalDateTime start = null;
+        LocalDateTime end = null;
+
+        if (updatedDate != null) {
+            start = updatedDate.atStartOfDay();
+            end = updatedDate.plusDays(1).atStartOfDay();
+        }
 
         return scheduleRepository.findSchedulesWithUserByUserId(
                 userResponseDto.getId(),
-                updatedDateStr,
+                start,
+                end,
                 pageResponseDto.getSize(),
                 pageResponseDto.getOffset()
         );
