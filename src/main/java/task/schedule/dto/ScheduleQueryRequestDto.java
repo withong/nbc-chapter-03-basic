@@ -14,7 +14,6 @@ import java.time.LocalDate;
  */
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleQueryRequestDto {
 
