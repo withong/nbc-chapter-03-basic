@@ -64,7 +64,7 @@ public class ScheduleController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> findScheduleWithUserById(
-            @NotNull(message = "ID는 필수 값입니다.") @PathVariable("id") Long id
+            @NotNull @PathVariable("id") Long id
     ) {
         return new ResponseEntity<>(scheduleService.findScheduleWithUserById(id), HttpStatus.OK);
     }
@@ -81,7 +81,7 @@ public class ScheduleController {
      */
     @PatchMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(
-            @NotNull(message = "ID는 필수 값입니다.") @PathVariable("id") Long id,
+            @NotNull @PathVariable("id") Long id,
             @RequestBody @Valid ScheduleRequestDto requestDto
     ) {
         return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto), HttpStatus.OK);
@@ -97,7 +97,7 @@ public class ScheduleController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> deleteSchedule(
-            @NotNull(message = "ID는 필수 값입니다.") @PathVariable("id") Long id,
+            @NotNull @PathVariable("id") Long id,
             @RequestBody @Valid ScheduleRequestDto requestDto
     ) {
         scheduleService.deleteSchedule(id, requestDto);

@@ -42,7 +42,7 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> findUserById(
-            @NotNull(message = "ID는 필수 값입니다.") @PathVariable("id") Long id
+            @NotNull @PathVariable("id") Long id
     ) {
         return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
     }
@@ -58,7 +58,7 @@ public class UserController {
      */
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(
-            @NotNull(message = "ID는 필수 값입니다.") @PathVariable("id") Long id,
+            @NotNull @PathVariable("id") Long id,
             @RequestBody @Valid UserUpdateRequestDto requestDto
     ) {
         return new ResponseEntity<>(userService.updateUser(id, requestDto), HttpStatus.OK);
@@ -73,7 +73,7 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<UserResponseDto> deleteUser(
-            @NotNull(message = "ID는 필수 값입니다.") @PathVariable("id") Long id
+            @NotNull @PathVariable("id") Long id
     ) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
