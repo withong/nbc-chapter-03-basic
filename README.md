@@ -318,4 +318,4 @@ schedules/{id}
 
 ---
 
-▶ [[내일배움캠프] 일정 관리 서버 트러블 슈팅](https://withong.github.io/camp/til-20/)
+▶ [일정 관리 API (JDBC) 트러블 슈팅](https://withong.github.io/project/schedule-01/)
